@@ -3,7 +3,7 @@
 
 Name:             apache-%{short_name}
 Version:          1.0
-Release:          0.2.svn1071189%{?dist}
+Release:          0.3.svn1071189%{?dist}
 Summary:          Utilities to assist with handling of CSV files
 License:          ASL 2.0
 Group:            Development/Libraries
@@ -84,6 +84,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0-0.3.svn1071189
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Thu Jan 12 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0-0.2.svn1071189
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
