@@ -3,7 +3,7 @@
 
 Name:             apache-%{short_name}
 Version:          1.0
-Release:          0.4.svn1071189%{?dist}
+Release:          0.5.svn1071189%{?dist}
 Summary:          Utilities to assist with handling of CSV files
 License:          ASL 2.0
 Group:            Development/Libraries
@@ -13,7 +13,7 @@ URL:              http://commons.apache.org/sandbox/%{base_name}
 Source0:          %{name}-%{version}.tar.xz
 BuildArch:        noarch
 
-BuildRequires:    xmvn >= 0.2.1
+BuildRequires:    maven-local >= 0.2.1
 BuildRequires:    java-devel >= 1:1.6.0
 BuildRequires:    jpackage-utils
 BuildRequires:    junit4
@@ -54,6 +54,10 @@ sed -i 's:commons-sandbox-parent:commons-parent:' pom.xml
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Feb 06 2013 Java SIG <java-devel@lists.fedoraproject.org> - 1.0-0.5.svn1071189
+- Update for https://fedoraproject.org/wiki/Fedora_19_Maven_Rebuild
+- Replace maven BuildRequires with maven-local
+
 * Tue Jan 15 2013 Michal Srb <msrb@redhat.com> - 1.0-0.4.svn1071189
 - Build with xmvn
 - Spec file cleanup
