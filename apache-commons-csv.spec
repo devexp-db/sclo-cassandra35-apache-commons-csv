@@ -13,7 +13,7 @@ URL:              http://commons.apache.org/sandbox/%{base_name}
 Source0:          %{name}-%{version}.tar.xz
 BuildArch:        noarch
 
-BuildRequires:    maven-local >= 0.2.1
+BuildRequires:    maven-local
 BuildRequires:    java-devel >= 1:1.6.0
 BuildRequires:    jpackage-utils
 BuildRequires:    junit4
