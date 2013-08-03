@@ -3,7 +3,7 @@
 
 Name:             apache-%{short_name}
 Version:          1.0
-Release:          0.6.svn1071189%{?dist}
+Release:          0.7.svn1071189%{?dist}
 Summary:          Utilities to assist with handling of CSV files
 License:          ASL 2.0
 Group:            Development/Libraries
@@ -54,6 +54,9 @@ sed -i 's:commons-sandbox-parent:commons-parent:' pom.xml
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0-0.7.svn1071189
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Wed Feb 13 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0-0.6.svn1071189
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
