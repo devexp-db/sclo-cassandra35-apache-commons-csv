@@ -3,7 +3,7 @@
 
 Name:             apache-%{short_name}
 Version:          1.0
-Release:          0.8.svn1071189%{?dist}
+Release:          0.9.svn1071189%{?dist}
 Summary:          Utilities to assist with handling of CSV files
 License:          ASL 2.0
 Group:            Development/Libraries
@@ -17,7 +17,6 @@ BuildRequires:    maven-local
 BuildRequires:    java-devel >= 1:1.6.0
 BuildRequires:    jpackage-utils
 BuildRequires:    junit4
-BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    apache-commons-parent
 
 
@@ -54,6 +53,9 @@ sed -i 's:commons-sandbox-parent:commons-parent:' pom.xml
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon May 26 2014 Mikolaj Izdebski <mizdebsk@redhat.com> - 1.0-0.9.svn1071189
+- Remove BuildRequires on maven-surefire-provider-junit4
+
 * Tue Mar 04 2014 Stanislav Ochotnicky <sochotnicky@redhat.com> - 1.0-0.8.svn1071189
 - Use Requires: java-headless rebuild (#1067528)
 
