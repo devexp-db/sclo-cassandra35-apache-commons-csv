@@ -2,22 +2,20 @@
 %global short_name      commons-%{base_name}
 
 Name:             apache-%{short_name}
-Version:          1.0
-Release:          0.11.svn1071189%{?dist}
+Version:          1.1
+Release:          1%{?dist}
 Summary:          Utilities to assist with handling of CSV files
 License:          ASL 2.0
-Group:            Development/Libraries
-URL:              http://commons.apache.org/sandbox/%{base_name}
-# svn export -r 1071189 http://svn.apache.org/repos/asf/commons/sandbox/csv/trunk/ apache-commons-csv-1.0
-# tar caf apache-commons-csv-1.0.tar.xz apache-commons-csv-1.0
-Source0:          %{name}-%{version}.tar.xz
+URL:              https://commons.apache.org/proper/%{short_name}/
+Source0:          http://www.apache.org/dist/commons/csv/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:        noarch
 
 BuildRequires:    maven-local
-BuildRequires:    java-devel >= 1:1.6.0
-BuildRequires:    jpackage-utils
-BuildRequires:    junit
-BuildRequires:    apache-commons-parent
+BuildRequires:    mvn(com.h2database:h2)
+BuildRequires:    mvn(commons-io:commons-io)
+BuildRequires:    mvn(junit:junit)
+BuildRequires:    mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:    mvn(org.jacoco:jacoco-maven-plugin)
 
 
 %description
@@ -26,33 +24,45 @@ reading and writing CSV files under an ASL license.
 
 %package javadoc
 Summary:          API documentation for %{name}
-Group:            Documentation
-Requires:         jpackage-utils
-
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{short_name}-%{version}-src
 sed -i 's/\r//' *.txt
-sed -i 's:commons-sandbox-parent:commons-parent:' pom.xml
 
-%build
+# Unwanted plugins
+%pom_remove_plugin :maven-assembly-plugin
+
+# Prevent build failure
+%pom_xpath_inject "pom:plugin[pom:artifactId='apache-rat-plugin']/pom:configuration/pom:excludes" "
+<exclude>**/.xmvn/**</exclude>"
+
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : %{short_name}:%{short_name}
+
+%build
+
 %mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt
+%doc RELEASE-NOTES.txt
+%license LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
+%license LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Apr 11 2015 gil cattaneo <puntogil@libero.it> 1.1-1
+- update to 1.1
+- adapt to current guideline
+- introduce license macro
+- fix Url and Source0 field
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0-0.11.svn1071189
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
