@@ -1,22 +1,18 @@
-%global base_name       csv
-%global short_name      commons-%{base_name}
+Name:           apache-commons-csv
+Version:        1.1
+Release:        1%{?dist}
+Summary:        Utilities to assist with handling of CSV files
+License:        ASL 2.0
+URL:            https://commons.apache.org/proper/commons-csv/
+BuildArch:      noarch
 
-Name:             apache-%{short_name}
-Version:          1.1
-Release:          1%{?dist}
-Summary:          Utilities to assist with handling of CSV files
-License:          ASL 2.0
-URL:              https://commons.apache.org/proper/%{short_name}/
-Source0:          http://www.apache.org/dist/commons/csv/source/%{short_name}-%{version}-src.tar.gz
-BuildArch:        noarch
+Source0:        http://www.apache.org/dist/commons/csv/source/commons-csv-%{version}-src.tar.gz
 
-BuildRequires:    maven-local
-BuildRequires:    mvn(com.h2database:h2)
-BuildRequires:    mvn(commons-io:commons-io)
-BuildRequires:    mvn(junit:junit)
-BuildRequires:    mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:    mvn(org.jacoco:jacoco-maven-plugin)
-
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.h2database:h2)
+BuildRequires:  mvn(commons-io:commons-io)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 
 %description
 Commons CSV was started to unify a common and simple interface for
@@ -29,21 +25,19 @@ Summary:          API documentation for %{name}
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
+%setup -q -n commons-csv-%{version}-src
 sed -i 's/\r//' *.txt
+find -name profile.jacoco -delete
 
 # Unwanted plugins
 %pom_remove_plugin :maven-assembly-plugin
+%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :maven-checkstyle-plugin
 
-# Prevent build failure
-%pom_xpath_inject "pom:plugin[pom:artifactId='apache-rat-plugin']/pom:configuration/pom:excludes" "
-<exclude>**/.xmvn/**</exclude>"
-
-%mvn_file  : %{short_name} %{name}
-%mvn_alias : %{short_name}:%{short_name}
+%mvn_file ":{*}" %{name} @1
+%mvn_alias : commons-csv:
 
 %build
-
 %mvn_build
 
 %install
