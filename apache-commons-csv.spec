@@ -1,6 +1,6 @@
 Name:           apache-commons-csv
 Version:        1.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Utilities to assist with handling of CSV files
 License:        ASL 2.0
 URL:            https://commons.apache.org/proper/commons-csv/
@@ -51,6 +51,9 @@ find -name profile.jacoco -delete
 %license LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Sat Apr 11 2015 gil cattaneo <puntogil@libero.it> 1.1-1
 - update to 1.1
 - adapt to current guideline
