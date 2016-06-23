@@ -1,5 +1,5 @@
 Name:           apache-commons-csv
-Version:        1.2
+Version:        1.4
 Release:        1%{?dist}
 Summary:        Utilities to assist with handling of CSV files
 License:        ASL 2.0
@@ -12,7 +12,9 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(com.h2database:h2)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 
 %description
 Commons CSV was started to unify a common and simple interface for
@@ -51,6 +53,9 @@ find -name profile.jacoco -delete
 %license LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Jun 23 2016 Michael Simacek <msimacek@redhat.com> - 1.4-1
+- Update to upstream version 1.4
+
 * Mon Feb 15 2016 Michael Simacek <msimacek@redhat.com> - 1.2-1
 - Update to upstream version 1.2
 
