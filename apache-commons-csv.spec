@@ -1,6 +1,6 @@
 Name:           apache-commons-csv
 Version:        1.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Utilities to assist with handling of CSV files
 License:        ASL 2.0
 URL:            https://commons.apache.org/proper/commons-csv/
@@ -9,7 +9,6 @@ BuildArch:      noarch
 Source0:        http://www.apache.org/dist/commons/csv/source/commons-csv-%{version}-src.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.h2database:h2)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
@@ -36,6 +35,10 @@ find -name profile.jacoco -delete
 %pom_remove_plugin :apache-rat-plugin
 %pom_remove_plugin :maven-checkstyle-plugin
 
+# unwanted dependency
+%pom_remove_dep :h2
+rm src/test/java/org/apache/commons/csv/CSVPrinterTest.java
+
 %mvn_file ":{*}" %{name} @1
 %mvn_alias : commons-csv:
 
@@ -53,6 +56,9 @@ find -name profile.jacoco -delete
 %license LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Feb 06 2017 Michael Simacek <msimacek@redhat.com> - 1.4-2
+- Remove build dep on h2
+
 * Thu Jun 23 2016 Michael Simacek <msimacek@redhat.com> - 1.4-1
 - Update to upstream version 1.4
 
