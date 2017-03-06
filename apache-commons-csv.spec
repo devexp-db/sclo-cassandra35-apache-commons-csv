@@ -1,26 +1,30 @@
-Name:           apache-commons-csv
-Version:        1.4
-Release:        2%{?dist}
-Summary:        Utilities to assist with handling of CSV files
-License:        ASL 2.0
-URL:            https://commons.apache.org/proper/commons-csv/
-BuildArch:      noarch
+%{?scl:%scl_package apache-commons-csv}
+%{!?scl:%global pkg_name %{name}}
 
-Source0:        http://www.apache.org/dist/commons/csv/source/commons-csv-%{version}-src.tar.gz
+Name:		%{?scl_prefix}apache-commons-csv
+Version:	1.4
+Release:	3%{?dist}
+Summary:	Utilities to assist with handling of CSV files
+License:	ASL 2.0
+URL:		https://commons.apache.org/proper/commons-csv/
+BuildArch:	noarch
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+Source0:	http://www.apache.org/dist/commons/csv/source/commons-csv-%{version}-src.tar.gz
+
+BuildRequires:	%{?scl_prefix_maven}maven-local
+BuildRequires:	%{?scl_prefix_java_common}apache-commons-io
+BuildRequires:	%{?scl_prefix_java_common}junit
+BuildRequires:	%{?scl_prefix_maven}apache-commons-lang3
+BuildRequires:	%{?scl_prefix_maven}apache-commons-parent
+BuildRequires:	%{?scl_prefix_maven}maven-antrun-plugin
+%{?scl:Requires: %scl_runtime}
 
 %description
 Commons CSV was started to unify a common and simple interface for
 reading and writing CSV files under an ASL license.
 
 %package javadoc
-Summary:          API documentation for %{name}
+Summary:	API documentation for %{name}
 
 %description javadoc
 This package contains the API documentation for %{name}.
@@ -30,6 +34,7 @@ This package contains the API documentation for %{name}.
 sed -i 's/\r//' *.txt
 find -name profile.jacoco -delete
 
+%{?scl:scl enable %{scl_maven} %{scl} - << "EOF"}
 # Unwanted plugins
 %pom_remove_plugin :maven-assembly-plugin
 %pom_remove_plugin :apache-rat-plugin
@@ -39,14 +44,19 @@ find -name profile.jacoco -delete
 %pom_remove_dep :h2
 rm src/test/java/org/apache/commons/csv/CSVPrinterTest.java
 
-%mvn_file ":{*}" %{name} @1
+%mvn_file ":{*}" %{pkg_name} @1
 %mvn_alias : commons-csv:
+%{?scl:EOF}
 
 %build
+%{?scl:scl enable %{scl_maven} %{scl} - << "EOF"}
 %mvn_build
+%{?scl:EOF}
 
 %install
+%{?scl:scl enable %{scl_maven} %{scl} - << "EOF"}
 %mvn_install
+%{?scl:EOF}
 
 %files -f .mfiles
 %doc RELEASE-NOTES.txt
@@ -56,6 +66,9 @@ rm src/test/java/org/apache/commons/csv/CSVPrinterTest.java
 %license LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Mar 06 2017 Tomas Repik <trepik@redhat.com> - 1.4-3
+- scl conversion
+
 * Mon Feb 06 2017 Michael Simacek <msimacek@redhat.com> - 1.4-2
 - Remove build dep on h2
 
